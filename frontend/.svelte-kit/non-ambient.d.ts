@@ -39,6 +39,6 @@ declare module "$app/types" {
 		};
 		Pathname(): "/" | "/qr";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/audio.mp3" | "/en.srt" | "/en.svg" | "/fr.srt" | "/fr.svg" | string & {};
+		Asset(): "/audio.mp3" | "/bg.png" | "/en.srt" | "/en.svg" | "/fr.srt" | "/fr.svg" | "/logo.png" | string & {};
 	}
 }

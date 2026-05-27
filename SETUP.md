@@ -42,12 +42,12 @@ Expected output:
 ```
 PartyKit Dev Server
 Listening on http://localhost:1999
-Room URL: http://localhost:1999/parties/main/room/main-stage
+Room URL: http://localhost:1999/parties/main/main-stage
 ```
 
 Leave this running in a terminal window. Your local relay is now accessible at:
 ```
-ws://localhost:1999/parties/main/room/main-stage
+ws://localhost:1999/parties/main/main-stage
 ```
 
 **Note:** For local frontend testing, modify `frontend/src/App.svelte` line 14 to use:
@@ -84,7 +84,7 @@ Test the deployed relay with curl:
 
 ```bash
 curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" \
-  https://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/room/main-stage
+  https://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/main-stage
 ```
 
 You should receive a WebSocket upgrade response (101 status code).
@@ -304,11 +304,11 @@ ping subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev
 **Fix:**
 1. Verify URL format:
    ```
-   wss://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/room/main-stage
+   wss://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/main-stage
    ```
 2. Test connectivity:
    ```bash
-   curl -v https://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/room/main-stage
+   curl -v https://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/main-stage
    ```
 3. If using corporate/venue WiFi, ensure port 443 (WSS) is not blocked.
 
@@ -374,7 +374,7 @@ npm install
 | Test frontend locally | `cd frontend && npm run dev` |
 | Deploy frontend to Vercel | `vercel --prod` |
 | List deployed relays | `npx partykit list` |
-| Test relay connectivity | `curl -v https://subtitle-relay.YOUR-USERNAME.partykit.dev/parties/main/room/main-stage` |
+| Test relay connectivity | `curl -v https://subtitle-relay.YOUR-USERNAME.partykit.dev/parties/main/main-stage` |
 
 ---
 

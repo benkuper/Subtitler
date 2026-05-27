@@ -4,7 +4,7 @@
   "description": "High-contrast real-time subtitle display for outdoor projection mapping",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview"
   },

@@ -105,9 +105,26 @@ function startTicker(room, state) {
   }, 1000)
 }
 
+function getConnectionCount(room) {
+  return Array.from(room.getConnections()).length
+}
+
+function broadcastToRoom(room, message) {
+  const connectionCount = getConnectionCount(room)
+  console.log(`[BROADCAST] room=${room.id} clients=${connectionCount} message=${message}`)
+  room.broadcast(message)
+}
+
 export default {
   async onConnect(connection, room) {
-    console.log(`[CONNECT] Client connected: ${connection.id}`)
+    console.log(`[CONNECT] room=${room.id} client=${connection.id} clients=${getConnectionCount(room)}`)
+
+    const requestUrl = connection.uri || connection.url
+    if (typeof requestUrl === 'string' && requestUrl.includes('/parties/main/room/')) {
+      console.warn(
+        '[WARN] Legacy URL detected. Use /parties/main/main-stage instead of /parties/main/room/main-stage, or connect the frontend with ?room=room.'
+      )
+    }
 
     const state = getOrCreateRoomState(room)
     if (state.mode === 'playing') {
@@ -115,11 +132,13 @@ export default {
       const timeMessage = formatTimeMessage(computedTime)
       state.lastBroadcastMessage = timeMessage
       connection.send(timeMessage)
+      console.log(`[SEND] room=${room.id} client=${connection.id} message=${timeMessage}`)
       return
     }
 
     if (state.lastBroadcastMessage) {
       connection.send(state.lastBroadcastMessage)
+      console.log(`[SEND] room=${room.id} client=${connection.id} message=${state.lastBroadcastMessage}`)
     }
   },
 
@@ -135,7 +154,7 @@ export default {
       state.anchorMs = Date.now()
       const timeMessage = formatTimeMessage(state.anchorTimeSec)
       state.lastBroadcastMessage = timeMessage
-      room.broadcast(timeMessage)
+      broadcastToRoom(room, timeMessage)
       startTicker(room, state)
       return
     }
@@ -145,7 +164,7 @@ export default {
       state.mode = 'free'
       state.lastFreeMessage = 'stop'
       state.lastBroadcastMessage = 'stop'
-      room.broadcast('stop')
+      broadcastToRoom(room, 'stop')
       return
     }
 
@@ -154,11 +173,11 @@ export default {
     state.mode = 'free'
     state.lastFreeMessage = parsed.message
     state.lastBroadcastMessage = parsed.message
-    room.broadcast(parsed.message)
+    broadcastToRoom(room, parsed.message)
   },
 
   async onClose(connection, room) {
-    console.log(`[DISCONNECT] Client disconnected: ${connection.id}`)
+    console.log(`[DISCONNECT] room=${room.id} client=${connection.id} clients=${getConnectionCount(room)}`)
   },
 
   async onError(connection, room, error) {

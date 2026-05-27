@@ -20,8 +20,10 @@ This guide explains how to configure your local Chataigne show control rig to pu
 The PartyKit URL scheme for room-based broadcasting follows this pattern:
 
 ```
-wss://<relay-service>.<your-username>.partykit.dev/parties/main/room/<room-name>
+wss://<relay-service>.<your-username>.partykit.dev/parties/main/<room-name>
 ```
+
+Do not include an extra `/room/` segment. In PartyKit, the segment after `/parties/main/` is the room id, so `/parties/main/room/main-stage` connects to a room literally named `room`.
 
 ### Exact Parameter Breakdown:
 
@@ -33,7 +35,7 @@ wss://<relay-service>.<your-username>.partykit.dev/parties/main/room/<room-name>
 
 ### Complete Example URL:
 ```
-wss://subtitle-relay.alice.partykit.dev/parties/main/room/main-stage
+wss://subtitle-relay.alice.partykit.dev/parties/main/main-stage
 ```
 
 ### Chataigne Configuration:
@@ -41,7 +43,7 @@ wss://subtitle-relay.alice.partykit.dev/parties/main/room/main-stage
 1. In the WebSocket Client module, locate the **Host** field.
 2. Enter the full URL (using your actual PartyKit username):
    ```
-   wss://subtitle-relay.your-username.partykit.dev/parties/main/room/main-stage
+   wss://subtitle-relay.your-username.partykit.dev/parties/main/main-stage
    ```
 3. Leave the **Port** field empty (the URL includes the port implicitly via `wss://`).
 4. Set **Auto-reconnect** to `true` to handle network interruptions gracefully.
@@ -182,7 +184,7 @@ Payload: {"text": "First subtitle line"}
 ## Quick Reference: Full WebSocket URL Format
 
 ```
-wss://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/room/main-stage
+wss://subtitle-relay.YOUR-PARTYKIT-USERNAME.partykit.dev/parties/main/main-stage
 ```
 
 **After your first deployment, replace `YOUR-PARTYKIT-USERNAME` everywhere in Chataigne configs.**

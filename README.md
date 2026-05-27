@@ -51,7 +51,7 @@ See [CHATAIGNE_SETUP.md](./CHATAIGNE_SETUP.md) for step-by-step instructions.
 - Status indicator for connection health
 
 ✅ **Easy Integration**
-- Simple WebSocket URL: `wss://subtitle-relay.USERNAME.partykit.dev/parties/main/room/main-stage`
+- Simple WebSocket URL: `wss://subtitle-relay.USERNAME.partykit.dev/parties/main/main-stage`
 - JSON payload: `{"text": "Your subtitle"}`
 - Chataigne timeline triggers ready
 
@@ -132,10 +132,10 @@ vercel --prod
 **Status shows "Reconnexion..." (red)?**
 - Verify PartyKit URL in App.svelte
 - Check browser console (F12) for errors
-- Test relay connectivity: `curl -v https://subtitle-relay.YOUR-USERNAME.partykit.dev/parties/main/room/main-stage`
+- Test relay connectivity: `curl -v https://subtitle-relay.YOUR-USERNAME.partykit.dev/parties/main/main-stage`
 
 **Chataigne won't connect to relay?**
-- Verify WebSocket URL format: `wss://subtitle-relay.YOUR-USERNAME.partykit.dev/parties/main/room/main-stage`
+- Verify WebSocket URL format: `wss://subtitle-relay.YOUR-USERNAME.partykit.dev/parties/main/main-stage`
 - Test firewall allows port 443 (WSS)
 
 **Subtitles delayed by multiple seconds?**
