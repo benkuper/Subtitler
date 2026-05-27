@@ -9,3 +9,5 @@ dist/
 build/
 .partykit/
 partykit-beta.json
+
+frontend/.svelte-kit/

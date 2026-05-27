@@ -42,6 +42,7 @@
   }
 
   let audioElement: HTMLAudioElement | null = null
+  let audioElementLanguage: Language | null = null
   let audioLoaded = false
   let timelineRunning = false
   let timelineAnchorPerfMs = 0
@@ -53,7 +54,8 @@
   let userHasInteracted = false
   let audioPlayBlocked = false
 
-  const DRIFT_THRESHOLD_SECONDS = 0.35
+  const TIMELINE_DRIFT_THRESHOLD_SECONDS = 0.35
+  const AUDIO_DRIFT_SEEK_THRESHOLD_SECONDS = 2
   const SUBTITLE_FADE_MS = 300
   const LANGUAGE_STORAGE_KEY = 'subtitler:selected-language'
 
@@ -313,13 +315,25 @@
     subtitleTracks[language].loaded = true
   }
 
+  function getAudioSource(language: Language): string {
+    return `${base}/${language}.mp3`
+  }
+
   function ensureAudioElement(): HTMLAudioElement {
-    if (audioElement) {
+    if (audioElement && audioElementLanguage === selectedLanguage) {
       return audioElement
     }
 
-    audioElement = new Audio(`${base}/audio.mp3`)
+    if (!audioElement) {
+      audioElement = new Audio()
+    } else {
+      audioElement.pause()
+    }
+
+    audioElement.src = getAudioSource(selectedLanguage)
     audioElement.preload = 'auto'
+    audioElement.load()
+    audioElementLanguage = selectedLanguage
     audioLoaded = true
     return audioElement
   }
@@ -346,8 +360,12 @@
     const expectedTime = getLocalTimelineSeconds()
     const audioDrift = Math.abs(audio.currentTime - expectedTime)
 
-    if (forceSeek || audioDrift > DRIFT_THRESHOLD_SECONDS) {
-      audio.currentTime = expectedTime
+    if (forceSeek || audioDrift > AUDIO_DRIFT_SEEK_THRESHOLD_SECONDS) {
+      try {
+        audio.currentTime = expectedTime
+      } catch (error) {
+        console.warn('Audio seek failed:', error)
+      }
     }
 
     if (audio.paused) {
@@ -432,10 +450,10 @@
 
     const localTime = getLocalTimelineSeconds()
     const drift = Math.abs(localTime - serverSeconds)
-    if (drift > DRIFT_THRESHOLD_SECONDS) {
+    if (drift > TIMELINE_DRIFT_THRESHOLD_SECONDS) {
       timelineAnchorSec = Math.max(0, serverSeconds)
       timelineAnchorPerfMs = performance.now()
-      await syncAudioToTimeline(true)
+      await syncAudioToTimeline(false)
     }
   }
 
@@ -467,6 +485,9 @@
     if (timelineRunning) {
       await ensureSubtitlesLoaded(selectedLanguage)
       await refreshSubtitleFromTimeline()
+      if (audioDescriptionEnabled) {
+        await syncAudioToTimeline(true)
+      }
     }
   }
 
