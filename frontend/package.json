@@ -4,17 +4,20 @@
   "description": "High-contrast real-time subtitle display for outdoor projection mapping",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "svelte": "^5.0.0",
+    "@sveltejs/kit": "2.61.1",
     "partysocket": "latest",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "svelte": "^5.0.0"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
-    "vite": "^5.0.0"
+    "@sveltejs/adapter-static": "3.0.10",
+    "@sveltejs/vite-plugin-svelte": "^5.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.0"
   }
 }
