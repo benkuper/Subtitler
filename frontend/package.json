@@ -1,0 +1,20 @@
+{
+  "name": "outdoor-subtitles-client",
+  "version": "1.0.0",
+  "description": "High-contrast real-time subtitle display for outdoor projection mapping",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "svelte": "^5.0.0",
+    "partysocket": "latest",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
+    "vite": "^5.0.0"
+  }
+}

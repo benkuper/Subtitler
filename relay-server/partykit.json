@@ -1,0 +1,5 @@
+{
+  "name": "subtitle-relay",
+  "main": "server.js",
+  "compatibilityDate": "2026-05-21"
+}

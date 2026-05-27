@@ -1,0 +1,14 @@
+{
+  "name": "subtitle-relay",
+  "version": "1.0.0",
+  "description": "PartyKit edge relay server for real-time subtitle broadcasting",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "partykit dev",
+    "deploy": "partykit deploy --name subtitle-relay"
+  },
+  "dependencies": {
+    "partykit": "latest"
+  }
+}
